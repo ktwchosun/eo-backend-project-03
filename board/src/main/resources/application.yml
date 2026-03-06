@@ -1,0 +1,43 @@
+spring:
+  profiles:
+
+  sql:
+    init:
+      mode: always
+  application:
+    name: board
+
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:h2:~/board;AUTO_SERVER=TRUE;MODE=MySQL
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    defer-datasource-initialization: true
+    database: h2
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Seoul
+        show-sql: true
+        format_sql: true
+        use_sql_comments: false
+
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true

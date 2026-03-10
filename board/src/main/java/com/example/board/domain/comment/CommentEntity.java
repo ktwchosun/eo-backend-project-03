@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
 @Table(name = "comments")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
-@ToString(exclude = "postEntity")
 public class CommentEntity {
 
     @Id
@@ -28,7 +25,7 @@ public class CommentEntity {
     @JoinColumn(name = "post_id", nullable = false)
     private PostEntity postEntity;
 
-    @Column(name = "r_content", nullable = false, length = 200)
+    @Column(name = "content", nullable = false, length = 200)
     private String content;
 
     @CreationTimestamp
@@ -39,9 +36,14 @@ public class CommentEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-
-    public CommentEntity updateContent(String content) {
+    @Builder
+    public CommentEntity(Long userId, PostEntity postEntity, String content) {
+        this.userId = userId;
+        this.postEntity = postEntity;
         this.content = content;
-        return this;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
     }
 }

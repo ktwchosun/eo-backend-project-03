@@ -15,14 +15,13 @@ import java.util.List;
  * writer(nickname)은 posts에 저장하지 않고, users 테이블에서 조회해서 DTO를 채운다
  */
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "posts")
 public class PostEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "user_id", nullable = false)
@@ -34,9 +33,6 @@ public class PostEntity {
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    // nickname
-    // private String writer;
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -46,69 +42,50 @@ public class PostEntity {
     private LocalDateTime updatedAt;
 
     @Column(name = "view_count", nullable = false)
-    private Integer viewCount;
+    private Integer viewCount = 0;
 
     @Column(name = "comments_count", nullable = false)
-    private Integer commentsCount;
+    private Integer commentsCount = 0;
 
     @Column(name = "likes_count", nullable = false)
-    private Integer likesCount;
+    private Integer likesCount = 0;
 
-
-    @ToString.Exclude
     @OneToMany(mappedBy = "postEntity", cascade = CascadeType.REMOVE)
     private List<CommentEntity> commentEntityList = new ArrayList<>();
 
     @Builder
-    public PostEntity(Long userId, String title, String content,
-                      Integer viewCount, Integer commentsCount, Integer likesCount) {
+    public PostEntity(Long userId, String title, String content) {
         this.userId = userId;
         this.title = title;
         this.content = content;
-
-        this.viewCount = (viewCount == null ? 0 : viewCount);
-        this.commentsCount = (commentsCount == null ? 0 : commentsCount);
-        this.likesCount = (likesCount == null ? 0 : likesCount);
-
     }
 
-    // update 부분
-    public PostEntity updateTitle(String title) {
+    public void updatePost(String title, String content) {
         this.title = title;
-        return this;
-    }
-
-    public PostEntity updateContent(String content) {
         this.content = content;
-        return this;
     }
 
-
-    public PostEntity increaseViewCount() {
-        this.viewCount = (this.viewCount == null ? 0 : this.viewCount + 1);
-        return this;
+    public void increaseViewCount() {
+        this.viewCount++;
     }
 
-    public PostEntity increaseCommentsCount() {
-        this.commentsCount = (this.commentsCount == null ? 1 : this.commentsCount + 1);
-        return this;
+    public void increaseCommentsCount() {
+        this.commentsCount++;
     }
 
-    public PostEntity decreaseCommentsCount() {
-        this.commentsCount = (this.commentsCount == null || this.commentsCount <= 0 ? 0 : this.commentsCount - 1);
-        return this;
+    public void decreaseCommentsCount() {
+        if (this.commentsCount > 0) {
+            this.commentsCount--;
+        }
     }
 
-    // 좋아요 증가
-    public PostEntity increaseLikesCount() {
-        this.likesCount = (this.likesCount == null ? 1 : this.likesCount + 1);
-        return this;
+    public void increaseLikesCount() {
+        this.likesCount++;
     }
 
-    // 좋아요 감소
-    public PostEntity decreaseLikesCount() {
-        this.likesCount = (this.likesCount == null || this.likesCount <= 0 ? 0 : this.likesCount - 1);
-        return this;
+    public void decreaseLikesCount() {
+        if (this.likesCount > 0) {
+            this.likesCount--;
+        }
     }
-
 }

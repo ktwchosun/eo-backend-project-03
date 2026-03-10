@@ -14,10 +14,10 @@ public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
 
     // 이전 게시물: ID > currentId인 가장 작은 것 (최신순)
-    Optional<PostEntity> findFirstByBoardIdAndIdGreaterThanOrderByIdAsc(Long boardId, Long currentId);
+    Optional<PostEntity> findFirstByBoardIdAndIdGreaterThanOrderByIdAsc(Long currentId);
 
     // 다음 게시물: ID < currentId인 가장 큰 것 (최신순)
-    Optional<PostEntity> findFirstByBoardIdAndIdLessThanOrderByIdDesc(Long boardId, Long currentId);
+    Optional<PostEntity> findFirstByBoardIdAndIdLessThanOrderByIdDesc(Long currentId);
 
 
 }

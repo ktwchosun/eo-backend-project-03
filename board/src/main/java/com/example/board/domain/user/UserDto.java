@@ -31,7 +31,7 @@ public class UserDto {
     private String email;
 
 
-    public static UserDto from(@NotNull UserEntity userEntity) {
+    public static UserDto from(UserEntity userEntity) {
         if (userEntity == null) {
             throw new IllegalArgumentException("UserEntity cannot be null");
         }
@@ -39,7 +39,7 @@ public class UserDto {
         return UserDto.builder()
                 .id(userEntity.getId())
                 .username(userEntity.getUsername())
-                .password(userEntity.getPassword())
+//                .password(userEntity.getPassword())
                 .nickname(userEntity.getNickname())
                 .email(userEntity.getEmail())
                 .build();

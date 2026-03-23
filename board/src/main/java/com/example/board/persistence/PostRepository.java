@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<PostEntity, Long> {
 
     // 이전 게시글
-    Optional<PostEntity> findFirstByIdGreaterThanOrderByIdAsc(Long currentId);
+    Optional<PostEntity> findFirstByIdGreaterThanOrderByIdAsc(Long currentPostId);
 
     // 다음 게시글
-    Optional<PostEntity> findFirstByIdLessThanOrderByIdDesc(Long currentId);
+    Optional<PostEntity> findFirstByIdLessThanOrderByIdDesc(Long currentPostId);
 
 }

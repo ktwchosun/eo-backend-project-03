@@ -2,6 +2,8 @@ package com.example.board.persistence;
 
 import com.example.board.domain.comment.CommentEntity;
 import com.example.board.domain.post.PostEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -32,4 +34,5 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
      * @return 최신순의로 정렬된 댓글 리스트
      */
     List<CommentEntity> findByPostEntityIdOrderByIdDesc(Long postId);
+    Page<CommentEntity> findByPostEntityIdOrderByIdDesc(Long postId, Pageable pageable);
 }
